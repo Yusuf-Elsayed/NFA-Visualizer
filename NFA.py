@@ -16,7 +16,15 @@ class NFA:
         self.nfa_agraph.add_node(str(self.state_id), shape="circle")
         self.states.append(self.state_id)
         self.state_id += 1
+        self.plot_nfa_graph()
     def validate(self):
+
+        # Define a regex pattern to match any disallowed metacharacter
+        disallowed_metacharacters_pattern = r'[#/+\[\]{}?$^<>@%~!&"\',:;`\-]'
+        
+        # Check if the regex contains any disallowed metacharacters
+        if re.search(disallowed_metacharacters_pattern, self.regex):
+            return False
         try:
             re.compile(self.regex)
             return True
@@ -197,22 +205,23 @@ class NFA:
             self.incomplete_closure.append(self.states[-1])
 
     def sub_plot(self, regex):
-        tokens = parsing(regex)
-        if '|' in tokens:
-            index = tokens.index('|')
-            r1 = tokens[index-1]
-            r2 = tokens[index+1]
-            self.r1_or_r2(r1, r2)
+        if (self.validate()):
+            tokens = parsing(regex)
+            if '|' in tokens:
+                index = tokens.index('|')
+                r1 = tokens[index-1]
+                r2 = tokens[index+1]
+                self.r1_or_r2(r1, r2)
 
-        else:
-            for token in tokens:
-                if len(token)==1:
-                    self.sequance(token)
-                else:
-                    if token[-1] == '*':
-                        self.r_closure(token[:-1])
-                    if token[0] == '(' and token[-1] == ')':
-                        self.sub_plot(token[1:-1])
+            else:
+                for token in tokens:
+                    if len(token)==1:
+                        self.sequance(token)
+                    else:
+                        if token[-1] == '*':
+                            self.r_closure(token[:-1])
+                        if token[0] == '(' and token[-1] == ')':
+                            self.sub_plot(token[1:-1])
 
     def plot_nfa_graph(self):
         
