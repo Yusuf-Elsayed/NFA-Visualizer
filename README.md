@@ -10,7 +10,6 @@ NFA Visualizer is a Python application that allows users to visualize Nondetermi
 - [Usage](#usage)
 - [File Structure](#file-structure)
 - [Contributing](#contributing)
-- [License](#license)
 
 ## Introduction
 
