@@ -254,13 +254,14 @@ class App(customtkinter.CTk):
         input_string = self.input_string_entry.get()
 
         nfa = NFA(regex, input_string)
-        
         valide = nfa.validate()
-        is_match = nfa.check()
+        
 
         # show the appropriate frame
         if valide:
+            is_match = nfa.check()
             if is_match:
+                nfa.plot_nfa_graph()
                 self.true_frame.grid()
                 self.invalid_frame.grid_remove()
                 self.false_frame.grid_remove()

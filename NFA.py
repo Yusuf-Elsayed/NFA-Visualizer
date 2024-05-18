@@ -16,7 +16,6 @@ class NFA:
         self.nfa_agraph.add_node(str(self.state_id), shape="circle")
         self.states.append(self.state_id)
         self.state_id += 1
-        self.plot_nfa_graph()
     def validate(self):
         try:
             re.compile(self.regex)
